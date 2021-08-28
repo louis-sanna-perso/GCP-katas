@@ -1,9 +1,15 @@
 export { TodoList };
 
 interface TodoDatum {
-    description: string
+  description: string;
 }
 
-function TodoList({ todos }: { todos: TodoDatum[] }) {
-    return <div>{todos.map(({description}) => <div>{description}</div>)}</div>
+function TodoList({ todos }: { todos: TodoDatum[] }) {
+  return (
+    <div>
+      {todos.map(({ description }) => (
+        <div>{description}</div>
+      ))}
+    </div>
+  );
 }
