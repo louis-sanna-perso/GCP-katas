@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   },
 });
 
-function App() {
+function App(): JSX.Element {
   const classes = useStyles();
   return (
     <div className={classes.root}>
