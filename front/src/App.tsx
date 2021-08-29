@@ -14,9 +14,7 @@ function App(): JSX.Element {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <TodoList
-        todos={[{ description: "Buy milk" }, { description: "Sell eggs" }]}
-      />
+      <TodoList />
     </div>
   );
 }
