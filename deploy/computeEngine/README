@@ -1,0 +1,6 @@
+### To deploy app on computeEngine
+
+1. Create a VM instance with latest Ubuntu LTS (enable HTTP/HTTPS connection if you want to call it directly)
+2. Connect with ssh to instance
+3. Run commands in startup.sh 
+4. Add rules in firewall as needed.
