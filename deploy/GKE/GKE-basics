@@ -1,0 +1,50 @@
+gcloud artifacts repositories create react-todo \
+   --repository-format=docker \
+   --location=europe \
+   --description="Docker repository"
+
+docker build -t europe-docker.pkg.dev/${PROJECT_ID}/react-todo/todo-app:v1 .
+
+docker push europe-docker.pkg.dev/${PROJECT_ID}/react-todo/todo-ap:v1
+
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "nginx-1"
+  namespace: "default"
+  labels:
+    app: "todo-app"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "todo-app"
+  template:
+    metadata:
+      labels:
+        app: "todo-app"
+    spec:
+      containers:
+      - name: "todo-app-sha256-1"
+        image: "europe-docker.pkg.dev/booming-list-324418/react-todo/todo-app@sha256:8951306121eb252f215acbad52e679fbe8c8ae808f3445facd154524cf638ea2"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "nginx-1-hpa-zmw1"
+  namespace: "default"
+  labels:
+    app: "todo-app"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "nginx-1"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
